@@ -6,7 +6,7 @@ namespace AcademiaDoZe.Domain.Entities;
 
 public class Aluno : Pessoa
 {
-    public Aluno(
+    private Aluno(
         int id,
         string nome,
         Cpf cpf,

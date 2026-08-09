@@ -5,18 +5,15 @@ namespace AcademiaDoZe.Domain.Entities;
 public class AcessoAluno : Entity
 {
     public Aluno Aluno { get; private set; }
-    public DateTime Entrada { get; private set; }
-    public DateTime Saida { get; private set; }
+    public DateTime DataHora { get; private set; }
 
-    public AcessoAluno(
+    private AcessoAluno(
         int id,
         Aluno aluno,
-        DateTime entrada,
-        DateTime saida)
+        DateTime dataHora)
         : base(id)
     {
         Aluno = aluno;
-        Entrada = entrada;
-        Saida = saida;
+        DataHora = dataHora;
     }
 }

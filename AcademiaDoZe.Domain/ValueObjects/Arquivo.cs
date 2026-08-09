@@ -1,15 +1,31 @@
 ﻿// Amanda Soares Poroski
 
+using AcademiaDoZe.Domain.Common;
+
 namespace AcademiaDoZe.Domain.ValueObjects;
 
 public record Arquivo
 {
-    public string Nome { get; }
-    public string Caminho { get; }
+    public byte[] Conteudo { get; }
 
-    public Arquivo(string nome, string caminho)
+    private Arquivo(byte[] conteudo)
     {
-        Nome = nome;
-        Caminho = caminho;
+        Conteudo = conteudo;
+    }
+
+    public static Result<Arquivo> Criar(byte[] conteudo)
+    {
+        if (conteudo == null || conteudo.Length == 0)
+            return Result<Arquivo>.Failure(
+                "Arquivo", "ARQUIVO_OBRIGATORIO");
+
+        const int tamanhoMaximo = 15 * 1024 * 1024;
+
+        if (conteudo.Length > tamanhoMaximo)
+            return Result<Arquivo>.Failure(
+                "Arquivo", "ARQUIVO_MUITO_GRANDE");
+
+        return Result<Arquivo>.Success(
+            new Arquivo(conteudo));
     }
 }
