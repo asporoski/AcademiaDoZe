@@ -7,7 +7,7 @@ using AcademiaDoZe.Domain.ValueObjects;
 
 namespace AcademiaDoZe.Domain.Entities;
 
-public class Colaborador : Pessoa
+public class Colaborador : Pessoa, IAggregateRoot
 {
     public DateOnly DataAdmissao { get; private set; }
     public ColaboradorTipo Tipo { get; private set; }
@@ -81,7 +81,7 @@ public class Colaborador : Pessoa
             notifications.Add(
                 new Notification(
                     "DataAdmissao",
-                    "DATA_ADMISSAO_MAIOR_ATUAL"));
+                    "DATA_ADMISSAO_MAIOR_QUE_ATUAL"));
 
         if (!Enum.IsDefined(tipo))
             notifications.Add(

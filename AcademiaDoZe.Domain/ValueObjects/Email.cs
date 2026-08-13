@@ -16,26 +16,48 @@ public record Email
 
     public static Result<Email> Criar(string valor)
     {
-        if (NormalizadoService.TextoVazioOuNulo(valor))
-            return Result<Email>.Failure("EMAIL", "EMAIL_OBRIGATORIO");
+        var textoLimpo = NormalizadoService.LimparEspacos(valor);
 
-        var emailLimpo = NormalizadoService.LimparEspacos(valor);
+        if (string.IsNullOrWhiteSpace(textoLimpo) ||
+            !ValidarFormato(textoLimpo))
+        {
+            return Result<Email>.Failure(
+                "Email",
+                "EMAIL_FORMATO");
+        }
 
-        var partes = emailLimpo.Split('@');
+        return Result<Email>.Success(
+            new Email(textoLimpo));
+    }
 
-        if (partes.Length != 2 ||
-            string.IsNullOrWhiteSpace(partes[0]) ||
-            string.IsNullOrWhiteSpace(partes[1]))
-            return Result<Email>.Failure("EMAIL", "EMAIL_INVALIDO");
+    private static bool ValidarFormato(string email)
+    {
+        var partes = email.Split('@');
+
+        if (partes.Length != 2)
+            return false;
+
+        if (string.IsNullOrWhiteSpace(partes[0]))
+            return false;
 
         var dominio = partes[1];
 
-        if (!dominio.Contains('.') ||
-            dominio.StartsWith('.') ||
-            dominio.EndsWith('.'))
-            return Result<Email>.Failure("EMAIL", "EMAIL_INVALIDO");
+        if (string.IsNullOrWhiteSpace(dominio))
+            return false;
 
-        return Result<Email>.Success(new Email(emailLimpo));
+        if (dominio.StartsWith('.') ||
+            dominio.EndsWith('.'))
+            return false;
+
+        var labels = dominio.Split('.');
+
+        if (labels.Length < 2)
+            return false;
+
+        if (labels.Any(l => string.IsNullOrWhiteSpace(l)))
+            return false;
+
+        return true;
     }
 
     public override string ToString() => Valor;

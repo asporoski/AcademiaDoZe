@@ -17,14 +17,14 @@ public record Cep
     public static Result<Cep> Criar(string valor)
     {
         if (NormalizadoService.TextoVazioOuNulo(valor))
-            return Result<Cep>.Failure("CEP", "CEP_OBRIGATORIO");
+            return Result<Cep>.Failure("Cep", "CEP_OBRIGATORIO");
 
-        var cepLimpo = NormalizadoService.LimparEDigitos(valor);
+        var textoLimpo = NormalizadoService.LimparEDigitos(valor);
 
-        if (cepLimpo.Length != 8)
-            return Result<Cep>.Failure("CEP", "CEP_INVALIDO");
+        if (textoLimpo.Length != 8)
+            return Result<Cep>.Failure("Cep", "CEP_DIGITOS");
 
-        return Result<Cep>.Success(new Cep(cepLimpo));
+        return Result<Cep>.Success(new Cep(textoLimpo));
     }
 
     public override string ToString() => Valor;

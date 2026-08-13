@@ -24,7 +24,7 @@ public record Telefone
 
         if (telefoneLimpo.Length != 11)
             return Result<Telefone>.Failure(
-                "Telefone", "TELEFONE_INVALIDO");
+                "Telefone", "TELEFONE_DIGITOS");
 
         return Result<Telefone>.Success(
             new Telefone(telefoneLimpo));

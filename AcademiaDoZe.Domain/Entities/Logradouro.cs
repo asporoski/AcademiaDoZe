@@ -6,7 +6,7 @@ using AcademiaDoZe.Domain.ValueObjects;
 
 namespace AcademiaDoZe.Domain.Entities;
 
-public sealed class Logradouro : Entity
+public sealed class Logradouro : Entity, IAggregateRoot
 {
     public Cep Cep { get; }
     public string Nome { get; }

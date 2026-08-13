@@ -15,15 +15,17 @@ public record Arquivo
 
     public static Result<Arquivo> Criar(byte[] conteudo)
     {
-        if (conteudo == null || conteudo.Length == 0)
+        if (conteudo == null)
             return Result<Arquivo>.Failure(
-                "Arquivo", "ARQUIVO_OBRIGATORIO");
+                "Arquivo",
+                "ARQUIVO_OBRIGATORIO");
 
-        const int tamanhoMaximo = 15 * 1024 * 1024;
+        const int tamanhoMaximoBytes = 15 * 1024 * 1024;
 
-        if (conteudo.Length > tamanhoMaximo)
+        if (conteudo.Length > tamanhoMaximoBytes)
             return Result<Arquivo>.Failure(
-                "Arquivo", "ARQUIVO_MUITO_GRANDE");
+                "Arquivo",
+                "ARQUIVO_TIPO_TAMANHO");
 
         return Result<Arquivo>.Success(
             new Arquivo(conteudo));
