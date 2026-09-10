@@ -19,7 +19,6 @@
 	<ItemGroup>
 	  <Folder Include="Data\" />
 		<Folder Include="Exeptions\" />
-		<Folder Include="Repositories\" />
 		<Folder Include="Scripts\" />
 	</ItemGroup>
 

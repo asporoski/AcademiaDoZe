@@ -54,40 +54,33 @@ public static class DbInitializer
         }
     }
 
-    public static string ObterScript(
-        DatabaseType databaseType)
+    public static string ObterScript(DatabaseType databaseType)
     {
-        var nomeScript =
-            DbProvider.GetScriptName(databaseType);
+        var nomeScript = DbProvider.GetScriptName(databaseType);
 
-        var assembly =
-            Assembly.GetExecutingAssembly();
+        var assembly = Assembly.GetExecutingAssembly();
 
-        var recursos =
-            assembly.GetManifestResourceNames();
+        var recursos = assembly.GetManifestResourceNames();
 
-        var resourceName =
-            recursos.FirstOrDefault(r =>
-                r.EndsWith(
-                    nomeScript,
-                    StringComparison.OrdinalIgnoreCase));
+        var resourceName = recursos.FirstOrDefault(r =>
+            r.EndsWith(
+                nomeScript,
+                StringComparison.OrdinalIgnoreCase));
 
         if (resourceName == null)
         {
             throw new InfrastructureException(
                 "SCRIPT_EMBARCADO_NAO_ENCONTRADO",
-                $"Script '{nomeScript}' não encontrado. " +
-                $"Recursos disponíveis: {string.Join(" | ", recursos)}");
+                $"Script SQL embarcado '{nomeScript}' não encontrado.");
         }
 
         using var stream =
             assembly.GetManifestResourceStream(resourceName)
             ?? throw new InfrastructureException(
-                "ERRO_LEITURA_SCRIPT",
-                $"Erro ao carregar o script '{nomeScript}'.");
+                "SCRIPT_EMBARCADO_NAO_ENCONTRADO",
+                $"Script SQL embarcado '{nomeScript}' não encontrado.");
 
-        using var reader =
-            new StreamReader(stream);
+        using var reader = new StreamReader(stream);
 
         return reader.ReadToEnd();
     }

@@ -29,7 +29,7 @@ public class LogradouroInfrastructureTests : TestBase
             cep,
             "Amanda",
             "Poroski",
-            "SQLite",
+            "SQLServer",
             "SC",
             "Brasil");
 
@@ -249,8 +249,8 @@ public class LogradouroInfrastructureTests : TestBase
         await _repository.Adicionar(logradouro);
 
         var resultados =
-            await _repository.ObterPorCidade(
-                cidadeUnica.ToLower());
+        await _repository.ObterPorCidade(
+        cidadeUnica);
 
         Assert.NotNull(resultados);
         Assert.Single(resultados);

@@ -11,7 +11,7 @@ namespace AcademiaDoZe.Infrastructure.Tests;
 public abstract class TestBase
 {
     private const DatabaseType SelectedDatabaseType =
-        DatabaseType.Sqlite;
+     DatabaseType.SqlServer;
 
     protected string ConnectionString { get; }
 
@@ -24,13 +24,13 @@ public abstract class TestBase
         ConnectionString = DatabaseType switch
         {
             DatabaseType.SqlServer =>
-                "Server=localhost;Database=db_academia_do_ze;User Id=sa;Password=abcBolinhas12345;TrustServerCertificate=True;Encrypt=True;",
+                "Server=localhost;Database=db_academia_do_ze;User Id=amanda;Password=Amanda123!;TrustServerCertificate=True;Encrypt=True;",
 
             DatabaseType.MySql =>
-                "Server=localhost;Database=db_academia_do_ze;User Id=root;Password=abcBolinhas12345;",
+                "Server=localhost;Database=db_academia_do_ze;User Id=amanda;Password=Amanda123!",
 
             DatabaseType.Sqlite =>
-                $"Data Source=C:\\DEV\\AcademiaDoZe\\db_academia_do_ze.db;Cache=Shared;",
+                $"Data Source=C:\\Users\\poros\\db_academia_do_ze.db;Cache=Shared;",
 
             _ => throw new ArgumentOutOfRangeException(
                 nameof(DatabaseType),
