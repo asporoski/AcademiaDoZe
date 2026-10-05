@@ -12,22 +12,27 @@
         <Grid RowDefinitions="Auto,*">
 
             <!-- Cabeçalho -->
-            <StackLayout Spacing="10" Margin="0,0,0,20">
+            <StackLayout
+                Spacing="10"
+                Margin="0,0,0,20">
 
+                <!-- Logo alterada automaticamente conforme o tema -->
                 <Image
-                    Source="academiadoze.png"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Start"
+                    Source="{AppThemeBinding Light=logo_claro.png,
+                                             Dark=logo_escuro.png}"
                     HeightRequest="200"
-                    WidthRequest="200"/>
+                    WidthRequest="200"
+                    Aspect="AspectFit"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Start" />
 
                 <Label
                     Text="Academia do Zé"
-                    Style="{StaticResource Headline}"/>
+                    Style="{StaticResource Headline}" />
 
                 <Label
                     Text="Sistema de Gerenciamento"
-                    Style="{StaticResource SubHeadline}"/>
+                    Style="{StaticResource SubHeadline}" />
 
             </StackLayout>
 
@@ -48,17 +53,19 @@
 
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer
-                            Command="{Binding NavigateToLogradourosCommand}"/>
+                            Command="{Binding NavigateToLogradourosCommand}" />
                     </Border.GestureRecognizers>
 
                     <StackLayout Spacing="10">
+
                         <Label
                             Text="{Binding TotalLogradouros}"
-                            Style="{StaticResource SubHeadline}"/>
+                            Style="{StaticResource SubHeadline}" />
 
                         <Label
                             Text="Logradouros"
-                            HorizontalTextAlignment="Center"/>
+                            HorizontalTextAlignment="Center" />
+
                     </StackLayout>
 
                 </Border>
@@ -72,17 +79,19 @@
 
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer
-                            Command="{Binding NavigateToAlunosCommand}"/>
+                            Command="{Binding NavigateToAlunosCommand}" />
                     </Border.GestureRecognizers>
 
                     <StackLayout Spacing="10">
+
                         <Label
                             Text="{Binding TotalAlunos}"
-                            Style="{StaticResource SubHeadline}"/>
+                            Style="{StaticResource SubHeadline}" />
 
                         <Label
                             Text="Alunos"
-                            HorizontalTextAlignment="Center"/>
+                            HorizontalTextAlignment="Center" />
+
                     </StackLayout>
 
                 </Border>
@@ -96,17 +105,19 @@
 
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer
-                            Command="{Binding NavigateToColaboradoresCommand}"/>
+                            Command="{Binding NavigateToColaboradoresCommand}" />
                     </Border.GestureRecognizers>
 
                     <StackLayout Spacing="10">
+
                         <Label
                             Text="{Binding TotalColaboradores}"
-                            Style="{StaticResource SubHeadline}"/>
+                            Style="{StaticResource SubHeadline}" />
 
                         <Label
                             Text="Colaboradores"
-                            HorizontalTextAlignment="Center"/>
+                            HorizontalTextAlignment="Center" />
+
                     </StackLayout>
 
                 </Border>
@@ -120,17 +131,19 @@
 
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer
-                            Command="{Binding NavigateToMatriculasCommand}"/>
+                            Command="{Binding NavigateToMatriculasCommand}" />
                     </Border.GestureRecognizers>
 
                     <StackLayout Spacing="10">
+
                         <Label
                             Text="{Binding TotalMatriculas}"
-                            Style="{StaticResource SubHeadline}"/>
+                            Style="{StaticResource SubHeadline}" />
 
                         <Label
                             Text="Matrículas"
-                            HorizontalTextAlignment="Center"/>
+                            HorizontalTextAlignment="Center" />
+
                     </StackLayout>
 
                 </Border>
@@ -143,7 +156,7 @@
                 IsVisible="{Binding IsBusy}"
                 IsRunning="{Binding IsBusy}"
                 VerticalOptions="Center"
-                HorizontalOptions="Center"/>
+                HorizontalOptions="Center" />
 
         </Grid>
     </ScrollView>
