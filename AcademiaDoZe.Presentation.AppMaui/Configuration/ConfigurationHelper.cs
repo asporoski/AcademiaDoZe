@@ -1,4 +1,5 @@
-﻿// Amanda Soares Poroski
+﻿
+// Amanda Soares Poroski
 
 using AcademiaDoZe.Application.DependencyInjection;
 using AcademiaDoZe.Application.Enums;
@@ -12,10 +13,8 @@ public static class ConfigurationHelper
 {
     public static void ConfigureServices(IServiceCollection services)
     {
-        // Obtém a configuração atual salva nas preferências
         var (connectionString, databaseType) = ObterConfiguracaoAtual();
 
-        // Configuração utilizada pelos repositórios
         var repositoryConfig = new RepositoryConfig
         {
             ConnectionString = connectionString,
@@ -24,7 +23,6 @@ public static class ConfigurationHelper
 
         services.AddSingleton(repositoryConfig);
 
-        // Escuta alterações feitas na tela de Configurações
         WeakReferenceMessenger.Default.Register<
             RepositoryConfig,
             BancoPreferencesUpdatedMessage>(
@@ -34,14 +32,10 @@ public static class ConfigurationHelper
                 var (novaConnectionString, novoDatabaseType) =
                     ObterConfiguracaoAtual();
 
-                r.ConnectionString =
-                    novaConnectionString;
-
-                r.DatabaseType =
-                    novoDatabaseType.ToInfrastructure();
+                r.ConnectionString = novaConnectionString;
+                r.DatabaseType = novoDatabaseType.ToInfrastructure();
             });
 
-        // Configura os serviços da camada de aplicação
         services.AddApplicationServices();
     }
 
@@ -50,7 +44,6 @@ public static class ConfigurationHelper
         AppDatabaseType DatabaseType)
         ObterConfiguracaoAtual()
     {
-        // SQLite será utilizado como padrão
         var databaseTypeStr = Preferences.Get(
             "DatabaseType",
             AppDatabaseType.Sqlite.ToString());
@@ -59,38 +52,29 @@ public static class ConfigurationHelper
                 databaseTypeStr,
                 out var databaseType))
         {
-            databaseType =
-                AppDatabaseType.Sqlite;
+            databaseType = AppDatabaseType.Sqlite;
         }
 
         string connectionString;
 
         if (databaseType == AppDatabaseType.Sqlite)
         {
-            // Caminho padrão do SQLite
-            var defaultDbPath =
-                DeviceInfo.Platform == DevicePlatform.WinUI
-                    ? @"C:\DEV\AcademiaDoZe\db_academia_do_ze.db"
-                    : Path.Combine(
-                        FileSystem.AppDataDirectory,
-                        "db_academia_do_ze.db");
+            // Pasta de dados do próprio aplicativo MAUI
+            var dbPath = Path.Combine(
+                FileSystem.AppDataDirectory,
+                "db_academia_do_ze.db");
 
-            var dbPath = Preferences.Get(
-                "Sqlite_Caminho",
-                Preferences.Get(
-                    "SqliteCaminho",
-                    defaultDbPath));
+            // Garantir que a pasta exista
+            var pasta = Path.GetDirectoryName(dbPath);
 
-            if (string.IsNullOrWhiteSpace(dbPath))
+            if (!string.IsNullOrWhiteSpace(pasta))
             {
-                dbPath = defaultDbPath;
+                Directory.CreateDirectory(pasta);
             }
 
             var complemento = Preferences.Get(
                 "Sqlite_Complemento",
-                Preferences.Get(
-                    "Complemento",
-                    "Default Timeout=5;"));
+                "Default Timeout=5;");
 
             connectionString =
                 $"Data Source={dbPath};{complemento}";

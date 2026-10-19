@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:AcademiaDoZe.Presentation.AppMaui.ViewModels"
+    x:Class="AcademiaDoZe.Presentation.AppMaui.Views.AlunoPage"
+    x:DataType="vm:AlunoViewModel"
+    Title="{Binding Title}">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="20"
+            Spacing="15">
+
+            <!-- Título -->
+            <Label
+                Text="Cadastro de Aluno"
+                FontSize="26"
+                FontAttributes="Bold" />
+
+            <!-- Dados pessoais -->
+            <Label Text="CPF" />
+
+            <Entry
+                Text="{Binding Aluno.Cpf, Mode=TwoWay}"
+                Placeholder="000.000.000-00"
+                Keyboard="Numeric" />
+
+            <Label Text="Nome completo" />
+
+            <Entry
+                Text="{Binding Aluno.Nome, Mode=TwoWay}"
+                Placeholder="Digite o nome completo" />
+
+            <Label Text="Data de nascimento" />
+
+            <DatePicker
+                Date="{Binding Aluno.DataNascimento, Converter={StaticResource DateOnlyConverter}, Mode=TwoWay}"
+                Format="dd/MM/yyyy" />
+
+            <Label Text="Telefone" />
+
+            <Entry
+                Text="{Binding Aluno.Telefone, Mode=TwoWay}"
+                Placeholder="(00) 00000-0000"
+                Keyboard="Telephone" />
+
+            <Label Text="E-mail" />
+
+            <Entry
+                Text="{Binding Aluno.Email, Mode=TwoWay}"
+                Placeholder="exemplo@email.com"
+                Keyboard="Email" />
+
+            <Label Text="Senha" />
+
+            <Entry
+                Text="{Binding Aluno.Senha, Mode=TwoWay}"
+                Placeholder="Digite a senha"
+                IsPassword="True" />
+
+            <Label Text="Confirmar senha" />
+
+            <Entry
+                Text="{Binding ConfirmarSenha, Mode=TwoWay}"
+                Placeholder="Confirme a senha"
+                IsPassword="True" />
+
+            <!-- Foto -->
+            <Label
+                Text="Foto do aluno"
+                FontSize="18"
+                FontAttributes="Bold" />
+
+            <Border
+                HeightRequest="140"
+                WidthRequest="140"
+                HorizontalOptions="Center"
+                Stroke="#CCCCCC"
+                StrokeThickness="1"
+                BackgroundColor="#F0F0F0">
+
+                <Image
+                    Source="{Binding FotoPreview}"
+                    HeightRequest="140"
+                    WidthRequest="140"
+                    Aspect="AspectFill" />
+
+            </Border>
+
+            <Button
+                Text="Selecionar Foto"
+                Command="{Binding SelecionarFotoCommand}" />
+
+            <!-- Endereço -->
+            <Label
+                Text="Endereço"
+                FontSize="20"
+                FontAttributes="Bold"
+                Margin="0,10,0,0" />
+
+            <Label Text="CEP" />
+
+            <Grid
+                ColumnDefinitions="*,Auto"
+                ColumnSpacing="10">
+
+                <Entry
+                    Grid.Column="0"
+                    Text="{Binding Aluno.Endereco.Cep, Mode=TwoWay}"
+                    Placeholder="00000-000"
+                    Keyboard="Numeric" />
+
+                <Button
+                    Grid.Column="1"
+                    Text="Buscar CEP"
+                    Command="{Binding SearchByCepCommand}" />
+
+            </Grid>
+
+            <Label Text="Logradouro" />
+
+            <Entry
+                Text="{Binding Aluno.Endereco.Nome}"
+                Placeholder="Logradouro"
+                IsReadOnly="True" />
+
+            <Label Text="Bairro" />
+
+            <Entry
+                Text="{Binding Aluno.Endereco.Bairro}"
+                Placeholder="Bairro"
+                IsReadOnly="True" />
+
+            <Label Text="Cidade" />
+
+            <Entry
+                Text="{Binding Aluno.Endereco.Cidade}"
+                Placeholder="Cidade"
+                IsReadOnly="True" />
+
+            <Label Text="Estado" />
+
+            <Entry
+                Text="{Binding Aluno.Endereco.Estado}"
+                Placeholder="Estado"
+                IsReadOnly="True" />
+
+            <Label Text="Número" />
+
+            <Entry
+                Text="{Binding Aluno.Numero, Mode=TwoWay}"
+                Placeholder="Número do endereço" />
+
+            <Label Text="Complemento" />
+
+            <Entry
+                Text="{Binding Aluno.Complemento, Mode=TwoWay}"
+                Placeholder="Apartamento, bloco, etc." />
+
+            <!-- Botões -->
+            <Grid
+                ColumnDefinitions="*,*"
+                ColumnSpacing="10"
+                Margin="0,15">
+
+                <Button
+                    Grid.Column="0"
+                    Text="Cancelar"
+                    Command="{Binding CancelarCommand}" />
+
+                <Button
+                    Grid.Column="1"
+                    Text="Salvar"
+                    Command="{Binding SalvarAlunoCommand}" />
+
+            </Grid>
+
+            <!-- Indicador de carregamento -->
+            <ActivityIndicator
+                IsVisible="{Binding IsBusy}"
+                IsRunning="{Binding IsBusy}"
+                HorizontalOptions="Center" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

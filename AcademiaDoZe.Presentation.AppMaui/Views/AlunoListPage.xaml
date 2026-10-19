@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:AcademiaDoZe.Presentation.AppMaui.ViewModels"
+    x:Class="AcademiaDoZe.Presentation.AppMaui.Views.AlunoListPage"
+    x:DataType="vm:AlunoListViewModel"
+    Title="Alunos">
+
+    <Grid
+        RowDefinitions="Auto,*"
+        Padding="15"
+        RowSpacing="15">
+
+        <!-- Cabeçalho -->
+        <VerticalStackLayout
+            Grid.Row="0"
+            Spacing="12">
+
+            <Label
+                Text="Alunos"
+                FontSize="26"
+                FontAttributes="Bold" />
+
+            <Button
+                Text="Adicionar Aluno"
+                Command="{Binding AddAlunoCommand}" />
+
+        </VerticalStackLayout>
+
+        <!-- Lista de alunos -->
+        <CollectionView
+            Grid.Row="1"
+            ItemsSource="{Binding Alunos}"
+            SelectionMode="None">
+
+            <CollectionView.EmptyView>
+                <Label
+                    Text="Nenhum aluno encontrado."
+                    Padding="20"
+                    HorizontalTextAlignment="Center" />
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+
+                <DataTemplate
+                    x:DataType="vm:AlunoListaItem">
+
+                    <Border
+                        Padding="15"
+                        Margin="0,5"
+                        StrokeThickness="1">
+
+                        <VerticalStackLayout
+                            Spacing="12">
+
+                            <Grid
+                                ColumnDefinitions="90,*"
+                                ColumnSpacing="15">
+
+                                <!-- Foto do aluno -->
+                                <Border
+                                    Grid.Column="0"
+                                    HeightRequest="85"
+                                    WidthRequest="85"
+                                    Stroke="#CCCCCC"
+                                    StrokeThickness="1"
+                                    BackgroundColor="#F0F0F0">
+
+                                    <Image
+                                        Source="{Binding FotoPreview}"
+                                        HeightRequest="85"
+                                        WidthRequest="85"
+                                        Aspect="AspectFill" />
+
+                                </Border>
+
+                                <!-- Dados do aluno -->
+                                <VerticalStackLayout
+                                    Grid.Column="1"
+                                    Spacing="6"
+                                    VerticalOptions="Center">
+
+                                    <Label
+                                        Text="{Binding Nome}"
+                                        FontSize="18"
+                                        FontAttributes="Bold" />
+
+                                    <Label
+                                        Text="{Binding Cpf}"
+                                        FontSize="14" />
+
+                                    <Label
+                                        Text="{Binding Email}"
+                                        FontSize="14" />
+
+                                </VerticalStackLayout>
+
+                            </Grid>
+
+                            <!-- Botão editar -->
+                            <Button
+                                Text="Editar"
+                                HorizontalOptions="End"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AlunoListViewModel}}, Path=EditAlunoCommand}"
+                                CommandParameter="{Binding .}" />
+
+                        </VerticalStackLayout>
+
+                    </Border>
+
+                </DataTemplate>
+
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+
+    </Grid>
+
+</ContentPage>

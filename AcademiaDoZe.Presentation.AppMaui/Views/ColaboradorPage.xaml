@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:AcademiaDoZe.Presentation.AppMaui.ViewModels"
+    x:Class="AcademiaDoZe.Presentation.AppMaui.Views.ColaboradorPage"
+    x:DataType="vm:ColaboradorViewModel"
+    Title="{Binding Title}">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="18">
+
+            <VerticalStackLayout.Padding>
+                <OnIdiom x:TypeArguments="Thickness">
+                    <OnIdiom.Phone>12</OnIdiom.Phone>
+                    <OnIdiom.Tablet>24</OnIdiom.Tablet>
+                    <OnIdiom.Desktop>35</OnIdiom.Desktop>
+                    <OnIdiom.Default>20</OnIdiom.Default>
+                </OnIdiom>
+            </VerticalStackLayout.Padding>
+
+            <Label
+                Text="Dados do Colaborador"
+                FontAttributes="Bold">
+                <Label.FontSize>
+                    <OnIdiom x:TypeArguments="x:Double">
+                        <OnIdiom.Phone>22</OnIdiom.Phone>
+                        <OnIdiom.Tablet>26</OnIdiom.Tablet>
+                        <OnIdiom.Desktop>28</OnIdiom.Desktop>
+                        <OnIdiom.Default>24</OnIdiom.Default>
+                    </OnIdiom>
+                </Label.FontSize>
+            </Label>
+
+            <!-- CPF -->
+            <Label Text="CPF" />
+
+            <Grid ColumnDefinitions="*,Auto"
+                  ColumnSpacing="10">
+
+                <Entry Grid.Column="0"
+                       Text="{Binding Colaborador.Cpf}"
+                       Placeholder="000.000.000-00"
+                       Keyboard="Numeric" />
+
+                <Button Grid.Column="1"
+                        Text="Buscar"
+                        Command="{Binding SearchByCpfCommand}" />
+
+            </Grid>
+
+            <!-- Dados pessoais -->
+            <Label Text="Nome completo" />
+            <Entry Text="{Binding Colaborador.Nome}"
+                   Placeholder="Digite o nome completo" />
+
+            <Label Text="Data de nascimento" />
+            <DatePicker
+                Date="{Binding Colaborador.DataNascimento, Converter={StaticResource DateOnlyConverter}, Mode=TwoWay}"
+                Format="dd/MM/yyyy" />
+
+            <Label Text="Telefone" />
+            <Entry Text="{Binding Colaborador.Telefone}"
+                   Placeholder="(00) 00000-0000"
+                   Keyboard="Telephone" />
+
+            <Label Text="E-mail" />
+            <Entry Text="{Binding Colaborador.Email}"
+                   Placeholder="exemplo@email.com"
+                   Keyboard="Email" />
+
+            <!-- Senha -->
+            <Label Text="Senha" />
+            <Entry Text="{Binding Colaborador.Senha}"
+                   Placeholder="Digite a senha"
+                   IsPassword="True" />
+
+            <Label Text="Confirmar senha" />
+            <Entry Text="{Binding ConfirmarSenha}"
+                   Placeholder="Confirme a senha"
+                   IsPassword="True" />
+
+            <!-- Foto -->
+            <Label Text="Foto do colaborador"
+                   FontAttributes="Bold" />
+
+            <Image
+                Source="{Binding Colaborador.Foto, Converter={StaticResource FotoToImageSourceConverter}}"
+                Aspect="AspectFill">
+
+                <Image.HeightRequest>
+                    <OnIdiom x:TypeArguments="x:Double">
+                        <OnIdiom.Phone>110</OnIdiom.Phone>
+                        <OnIdiom.Tablet>140</OnIdiom.Tablet>
+                        <OnIdiom.Desktop>160</OnIdiom.Desktop>
+                        <OnIdiom.Default>120</OnIdiom.Default>
+                    </OnIdiom>
+                </Image.HeightRequest>
+
+                <Image.WidthRequest>
+                    <OnIdiom x:TypeArguments="x:Double">
+                        <OnIdiom.Phone>110</OnIdiom.Phone>
+                        <OnIdiom.Tablet>140</OnIdiom.Tablet>
+                        <OnIdiom.Desktop>160</OnIdiom.Desktop>
+                        <OnIdiom.Default>120</OnIdiom.Default>
+                    </OnIdiom>
+                </Image.WidthRequest>
+
+            </Image>
+
+            <Button Text="Selecionar Foto"
+                    Command="{Binding SelecionarFotoCommand}" />
+
+            <!-- Endereço -->
+            <Label Text="Endereço"
+                   FontSize="20"
+                   FontAttributes="Bold" />
+
+            <Label Text="CEP" />
+
+            <Grid ColumnDefinitions="*,Auto"
+                  ColumnSpacing="10">
+
+                <Entry Grid.Column="0"
+                       Text="{Binding Colaborador.Endereco.Cep}"
+                       Placeholder="00000-000"
+                       Keyboard="Numeric" />
+
+                <Button Grid.Column="1"
+                        Text="Buscar"
+                        Command="{Binding SearchByCepCommand}" />
+
+            </Grid>
+
+            <Label Text="Logradouro" />
+            <Entry Text="{Binding Colaborador.Endereco.Nome}"
+                   IsReadOnly="True" />
+
+            <Label Text="Bairro" />
+            <Entry Text="{Binding Colaborador.Endereco.Bairro}"
+                   IsReadOnly="True" />
+
+            <Label Text="Cidade" />
+            <Entry Text="{Binding Colaborador.Endereco.Cidade}"
+                   IsReadOnly="True" />
+
+            <Label Text="Estado" />
+            <Entry Text="{Binding Colaborador.Endereco.Estado}"
+                   IsReadOnly="True" />
+
+            <Label Text="Número" />
+            <Entry Text="{Binding Colaborador.Numero}"
+                   Placeholder="Número do endereço" />
+
+            <Label Text="Complemento" />
+            <Entry Text="{Binding Colaborador.Complemento}"
+                   Placeholder="Apartamento, bloco, etc." />
+
+            <!-- Dados profissionais -->
+            <Label Text="Dados Profissionais"
+                   FontSize="20"
+                   FontAttributes="Bold" />
+
+            <Label Text="Data de admissão" />
+            <DatePicker
+                Date="{Binding Colaborador.DataAdmissao, Converter={StaticResource DateOnlyConverter}, Mode=TwoWay}"
+                Format="dd/MM/yyyy" />
+
+            <Label Text="Tipo de colaborador" />
+            <Picker ItemsSource="{Binding ColaboradorTipos}"
+                    SelectedItem="{Binding Colaborador.Tipo}">
+                <Picker.ItemDisplayBinding>
+                    <Binding Converter="{StaticResource EnumDisplay}" />
+                </Picker.ItemDisplayBinding>
+            </Picker>
+
+            <Label Text="Vínculo" />
+            <Picker ItemsSource="{Binding ColaboradorVinculos}"
+                    SelectedItem="{Binding Colaborador.Vinculo}">
+                <Picker.ItemDisplayBinding>
+                    <Binding Converter="{StaticResource EnumDisplay}" />
+                </Picker.ItemDisplayBinding>
+            </Picker>
+
+            <!-- Ações -->
+            <Grid ColumnDefinitions="*,*"
+                  ColumnSpacing="10"
+                  Margin="0,15">
+
+                <Button Grid.Column="0"
+                        Text="Cancelar"
+                        Command="{Binding CancelCommand}" />
+
+                <Button Grid.Column="1"
+                        Text="Salvar"
+                        Command="{Binding SaveColaboradorCommand}" />
+
+            </Grid>
+
+            <ActivityIndicator
+                IsVisible="{Binding IsBusy}"
+                IsRunning="{Binding IsBusy}"
+                HorizontalOptions="Center" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

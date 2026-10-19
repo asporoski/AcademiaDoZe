@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:AcademiaDoZe.Presentation.AppMaui.ViewModels"
+    x:Class="AcademiaDoZe.Presentation.AppMaui.Views.ColaboradorListPage"
+    x:DataType="vm:ColaboradorListViewModel"
+    Title="{Binding Title}">
+
+    <Grid
+        RowDefinitions="Auto,*"
+        Padding="15"
+        RowSpacing="15">
+
+        <!-- Cabeçalho -->
+        <VerticalStackLayout
+            Grid.Row="0"
+            Spacing="10">
+
+            <Label
+                Text="Colaboradores"
+                FontSize="26"
+                FontAttributes="Bold" />
+
+            <!-- Campo de pesquisa -->
+            <Entry
+                Placeholder="Pesquisar colaborador..."
+                Text="{Binding SearchText}"
+                ClearButtonVisibility="WhileEditing" />
+
+            <!-- Botão pesquisar -->
+            <Button
+                Text="Pesquisar"
+                Command="{Binding SearchColaboradoresCommand}" />
+
+            <!-- Botão adicionar -->
+            <Button
+                Text="Adicionar Colaborador"
+                Command="{Binding AddColaboradorCommand}" />
+
+        </VerticalStackLayout>
+
+        <!-- Lista de colaboradores -->
+        <RefreshView
+            Grid.Row="1"
+            Command="{Binding RefreshCommand}"
+            IsRefreshing="{Binding IsRefreshing}">
+
+            <CollectionView
+                x:Name="ListaColaboradores"
+                ItemsSource="{Binding ColaboradoresComFoto}"
+                SelectionMode="None">
+
+                <CollectionView.EmptyView>
+
+                    <VerticalStackLayout
+                        Padding="20"
+                        Spacing="15">
+
+                        <Label
+                            Text="Nenhum colaborador encontrado."
+                            HorizontalTextAlignment="Center" />
+
+                    </VerticalStackLayout>
+
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+
+                    <DataTemplate
+                        x:DataType="vm:ColaboradorListaItem">
+
+                        <Border
+                            StrokeThickness="1"
+                            Padding="15"
+                            Margin="0,5">
+
+                            <VerticalStackLayout
+                                Spacing="12">
+
+                                <!-- Foto e informações -->
+                                <Grid
+                                    ColumnDefinitions="90,*"
+                                    ColumnSpacing="15">
+
+                                    <!-- Foto do colaborador -->
+                                    <Border
+                                        Grid.Column="0"
+                                        HeightRequest="85"
+                                        WidthRequest="85"
+                                        StrokeThickness="1"
+                                        Stroke="#DDDDDD"
+                                        BackgroundColor="#F0F0F0">
+
+                                        <Image
+                                            Source="{Binding FotoPreview}"
+                                            HeightRequest="85"
+                                            WidthRequest="85"
+                                            Aspect="AspectFill" />
+
+                                    </Border>
+
+                                    <!-- Dados do colaborador -->
+                                    <VerticalStackLayout
+                                        Grid.Column="1"
+                                        Spacing="6"
+                                        VerticalOptions="Center">
+
+                                        <Label
+                                            Text="{Binding Nome}"
+                                            FontSize="18"
+                                            FontAttributes="Bold"
+                                            LineBreakMode="WordWrap" />
+
+                                        <Label
+                                            Text="{Binding Cpf}"
+                                            FontSize="14" />
+
+                                        <Label
+                                            Text="{Binding Email}"
+                                            FontSize="14"
+                                            LineBreakMode="WordWrap" />
+
+                                    </VerticalStackLayout>
+
+                                </Grid>
+
+                                <!-- Botões Editar e Excluir -->
+                                <HorizontalStackLayout
+                                    Spacing="10"
+                                    HorizontalOptions="End">
+
+                                    <Button
+                                        Text="Editar"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ColaboradorListViewModel}}, Path=EditColaboradorCommand}"
+                                        CommandParameter="{Binding Colaborador}" />
+
+                                    <Button
+                                        Text="Excluir"
+                                        BackgroundColor="#C62828"
+                                        TextColor="White"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ColaboradorListViewModel}}, Path=DeleteColaboradorCommand}"
+                                        CommandParameter="{Binding Colaborador}" />
+
+                                </HorizontalStackLayout>
+
+                            </VerticalStackLayout>
+
+                        </Border>
+
+                    </DataTemplate>
+
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+        </RefreshView>
+
+    </Grid>
+
+</ContentPage>

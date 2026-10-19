@@ -1,4 +1,5 @@
-﻿// Amanda Soares Poroski
+﻿
+// Amanda Soares Poroski
 
 using AcademiaDoZe.Presentation.AppMaui.Configuration;
 using AcademiaDoZe.Presentation.AppMaui.ViewModels;
@@ -17,23 +18,44 @@ public static class MauiProgram
             .UseMauiApp<App>()
             .ConfigureFonts(fonts =>
             {
-                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                fonts.AddFont("MaterialIcons-Regular.ttf", "MaterialIcons");
+                fonts.AddFont(
+                    "OpenSans-Regular.ttf",
+                    "OpenSansRegular");
+
+                fonts.AddFont(
+                    "OpenSans-Semibold.ttf",
+                    "OpenSansSemibold");
+
+                fonts.AddFont(
+                    "MaterialIcons-Regular.ttf",
+                    "MaterialIcons");
             });
 
-        // Configurar serviços da aplicação e repositórios
         ConfigurationHelper.ConfigureServices(builder.Services);
 
-        // Registrar ViewModels
+        // Dashboard
         builder.Services.AddTransient<DashboardListViewModel>();
+        builder.Services.AddTransient<DashboardListPage>();
+
+        // Logradouros
         builder.Services.AddTransient<LogradouroListViewModel>();
         builder.Services.AddTransient<LogradouroViewModel>();
-
-        // Registrar Views
-        builder.Services.AddTransient<DashboardListPage>();
         builder.Services.AddTransient<LogradouroListPage>();
         builder.Services.AddTransient<LogradouroPage>();
+
+        // Colaboradores
+        builder.Services.AddTransient<ColaboradorListViewModel>();
+        builder.Services.AddTransient<ColaboradorViewModel>();
+        builder.Services.AddTransient<ColaboradorListPage>();
+        builder.Services.AddTransient<ColaboradorPage>();
+
+        // Alunos
+        builder.Services.AddTransient<AlunoListViewModel>();
+        builder.Services.AddTransient<AlunoViewModel>();
+        builder.Services.AddTransient<AlunoListPage>();
+        builder.Services.AddTransient<AlunoPage>();
+
+        // Configurações
         builder.Services.AddTransient<ConfigPage>();
 
 #if DEBUG
