@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:AcademiaDoZe.Presentation.AppMaui.ViewModels"
+    xmlns:dto="clr-namespace:AcademiaDoZe.Application.DTOs;assembly=AcademiaDoZe.Application"
+    x:Class="AcademiaDoZe.Presentation.AppMaui.Views.MatriculaListPage"
+    x:DataType="vm:MatriculaListViewModel"
+    Title="Matrículas">
+
+    <Grid
+        RowDefinitions="Auto,*"
+        Padding="15"
+        RowSpacing="15">
+
+        <!-- Cabeçalho e pesquisa -->
+        <VerticalStackLayout
+            Grid.Row="0"
+            Spacing="12">
+
+            <Label
+                Text="Matrículas"
+                FontSize="26"
+                FontAttributes="Bold" />
+
+            <Button
+                Text="Adicionar Matrícula"
+                Command="{Binding AddMatriculaCommand}" />
+
+            <!-- Filtros -->
+            <Picker
+                Title="Tipo de pesquisa"
+                ItemsSource="{Binding FilterTypes}"
+                SelectedItem="{Binding SelectedFilterType}" />
+
+            <Entry
+                Placeholder="Digite o valor para pesquisar"
+                Text="{Binding SearchText}"
+                ReturnType="Search"
+                ReturnCommand="{Binding SearchMatriculasCommand}" />
+
+            <HorizontalStackLayout Spacing="10">
+
+                <Button
+                    Text="Pesquisar"
+                    Command="{Binding SearchMatriculasCommand}"
+                    HorizontalOptions="FillAndExpand" />
+
+                <Button
+                    Text="Atualizar"
+                    Command="{Binding RefreshCommand}"
+                    HorizontalOptions="FillAndExpand" />
+
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+
+        <!-- Lista de matrículas -->
+        <RefreshView
+            Grid.Row="1"
+            IsRefreshing="{Binding IsRefreshing}"
+            Command="{Binding RefreshCommand}">
+
+            <CollectionView
+                ItemsSource="{Binding Matriculas}"
+                SelectionMode="None">
+
+                <CollectionView.EmptyView>
+                    <Label
+                        Text="Nenhuma matrícula encontrada."
+                        Padding="20"
+                        HorizontalTextAlignment="Center" />
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+
+                    <DataTemplate x:DataType="dto:MatriculaDto">
+
+                        <Border
+                            Padding="15"
+                            Margin="0,5"
+                            Stroke="#CCCCCC"
+                            StrokeThickness="1">
+
+                            <VerticalStackLayout Spacing="12">
+
+                                <!-- Nome do aluno -->
+                                <Label
+                                    Text="{Binding AlunoMatricula.Nome}"
+                                    FontSize="18"
+                                    FontAttributes="Bold" />
+
+                                <!-- Identificação -->
+                                <Label
+                                    Text="{Binding Id, StringFormat='Matrícula Nº {0}'}"
+                                    FontSize="14" />
+
+                                <!-- Plano -->
+                                <Label
+                                    Text="{Binding Plano, StringFormat='Plano: {0}'}"
+                                    FontSize="14" />
+
+                                <!-- Data de início -->
+                                <Label
+                                    Text="{Binding DataInicio, StringFormat='Início: {0:dd/MM/yyyy}'}"
+                                    FontSize="14" />
+
+                                <!-- Data de término -->
+                                <Label
+                                    Text="{Binding DataFim, StringFormat='Término: {0:dd/MM/yyyy}'}"
+                                    FontSize="14" />
+
+                                <!-- Botões de ação -->
+                                <HorizontalStackLayout
+                                    Spacing="10"
+                                    HorizontalOptions="End">
+
+                                    <Button
+                                        Text="Editar"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MatriculaListViewModel}}, Path=EditMatriculaCommand}"
+                                        CommandParameter="{Binding .}" />
+
+                                    <Button
+                                        Text="Excluir"
+                                        BackgroundColor="#B3261E"
+                                        TextColor="White"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MatriculaListViewModel}}, Path=DeleteMatriculaCommand}"
+                                        CommandParameter="{Binding .}" />
+
+                                </HorizontalStackLayout>
+
+                            </VerticalStackLayout>
+
+                        </Border>
+
+                    </DataTemplate>
+
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+        </RefreshView>
+
+    </Grid>
+
+</ContentPage>

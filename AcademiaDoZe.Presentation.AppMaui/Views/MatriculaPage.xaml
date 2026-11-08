@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:AcademiaDoZe.Presentation.AppMaui.ViewModels"
+    x:Class="AcademiaDoZe.Presentation.AppMaui.Views.MatriculaPage"
+    x:DataType="vm:MatriculaViewModel"
+    Title="{Binding Title}">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="20"
+            Spacing="15">
+
+            <!-- Título -->
+            <Label
+                Text="Cadastro de Matrícula"
+                FontSize="26"
+                FontAttributes="Bold" />
+
+            <!-- Dados do aluno -->
+            <Label
+                Text="Dados do Aluno"
+                FontSize="20"
+                FontAttributes="Bold"
+                Margin="0,10,0,0" />
+
+            <Label Text="CPF do aluno" />
+
+            <Grid
+                ColumnDefinitions="*,Auto"
+                ColumnSpacing="10">
+
+                <Entry
+                    Grid.Column="0"
+                    Text="{Binding Matricula.AlunoMatricula.Cpf, Mode=TwoWay}"
+                    Placeholder="000.000.000-00"
+                    Keyboard="Numeric" />
+
+                <Button
+                    Grid.Column="1"
+                    Text="Buscar CPF"
+                    Command="{Binding SearchByCpfCommand}" />
+
+            </Grid>
+
+            <Label Text="Nome do aluno" />
+
+            <Entry
+                Text="{Binding Matricula.AlunoMatricula.Nome}"
+                Placeholder="Nome do aluno"
+                IsReadOnly="True" />
+
+            <!-- Dados da matrícula -->
+            <Label
+                Text="Dados da Matrícula"
+                FontSize="20"
+                FontAttributes="Bold"
+                Margin="0,10,0,0" />
+
+            <Label Text="Plano" />
+
+            <Picker
+                Title="Selecione o plano"
+                ItemsSource="{Binding PlanoTipos}"
+                SelectedItem="{Binding Matricula.Plano, Mode=TwoWay}" />
+
+            <Label Text="Data de início" />
+
+            <DatePicker
+                Date="{Binding Matricula.DataInicio, Converter={StaticResource DateOnlyConverter}, Mode=TwoWay}"
+                Format="dd/MM/yyyy" />
+
+            <Label Text="Data de término" />
+
+            <DatePicker
+                Date="{Binding Matricula.DataFim, Converter={StaticResource DateOnlyConverter}, Mode=TwoWay}"
+                Format="dd/MM/yyyy" />
+
+            <Label Text="Objetivo da matrícula" />
+
+            <Editor
+                Text="{Binding Matricula.Objetivo, Mode=TwoWay}"
+                Placeholder="Descreva o objetivo do aluno"
+                AutoSize="TextChanges"
+                HeightRequest="100" />
+
+            <!-- Restrições médicas -->
+            <Label
+                Text="Restrições Médicas"
+                FontSize="20"
+                FontAttributes="Bold"
+                Margin="0,10,0,0" />
+
+            <Label
+                Text="Selecione as restrições, caso existam."
+                FontSize="13"
+                TextColor="Gray" />
+
+            <VerticalStackLayout
+                BindableLayout.ItemsSource="{Binding RestricoesMulti}"
+                Spacing="8">
+
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate
+                        x:DataType="vm:RestricaoSelectable">
+
+                        <Grid
+                            ColumnDefinitions="Auto,*"
+                            ColumnSpacing="10">
+
+                            <CheckBox
+                                Grid.Column="0"
+                                IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                VerticalOptions="Center" />
+
+                            <Label
+                                Grid.Column="1"
+                                Text="{Binding Value}"
+                                VerticalOptions="Center" />
+
+                        </Grid>
+
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+
+            </VerticalStackLayout>
+
+            <Label Text="Observações sobre restrições" />
+
+            <Editor
+                Text="{Binding Matricula.ObservacoesRestricoes, Mode=TwoWay}"
+                Placeholder="Descreva as restrições, se necessário"
+                AutoSize="TextChanges"
+                HeightRequest="100" />
+
+            <!-- Laudo médico -->
+            <Label
+                Text="Laudo Médico"
+                FontSize="20"
+                FontAttributes="Bold"
+                Margin="0,10,0,0" />
+
+            <Label
+                Text="O laudo é obrigatório para menores de 16 anos ou alunos com restrições médicas."
+                FontSize="13"
+                TextColor="Gray" />
+
+            <!-- Aviso de laudo obrigatório -->
+            <VerticalStackLayout
+                IsVisible="{Binding LaudoPendente}"
+                Spacing="5">
+
+                <Label
+                    Text="ATENÇÃO: LAUDO MÉDICO OBRIGATÓRIO!"
+                    TextColor="#B3261E"
+                    FontSize="15"
+                    FontAttributes="Bold" />
+
+                <Label
+                    Text="É necessário anexar um laudo médico antes de salvar esta matrícula."
+                    TextColor="#B3261E"
+                    FontSize="13" />
+
+            </VerticalStackLayout>
+
+            <!-- Pré-visualização do laudo -->
+            <Border
+                HeightRequest="180"
+                WidthRequest="180"
+                HorizontalOptions="Center"
+                Stroke="#CCCCCC"
+                StrokeThickness="1"
+                BackgroundColor="#F0F0F0">
+
+                <Image
+                    Source="{Binding LaudoPreview}"
+                    HeightRequest="180"
+                    WidthRequest="180"
+                    Aspect="AspectFit" />
+
+            </Border>
+
+            <Button
+                Text="Selecionar Laudo Médico"
+                Command="{Binding SelecionarFotoCommand}" />
+
+            <Button
+                Text="Remover Laudo"
+                Command="{Binding RemoverLaudoCommand}"
+                IsVisible="{Binding HasLaudo}" />
+
+            <!-- Botões -->
+            <Grid
+                ColumnDefinitions="*,*"
+                ColumnSpacing="10"
+                Margin="0,15">
+
+                <Button
+                    Grid.Column="0"
+                    Text="Cancelar"
+                    Command="{Binding CancelCommand}" />
+
+                <Button
+                    Grid.Column="1"
+                    Text="Salvar"
+                    Command="{Binding SaveMatriculaCommand}" />
+
+            </Grid>
+
+            <!-- Indicador de carregamento -->
+            <ActivityIndicator
+                IsVisible="{Binding IsBusy}"
+                IsRunning="{Binding IsBusy}"
+                HorizontalOptions="Center" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

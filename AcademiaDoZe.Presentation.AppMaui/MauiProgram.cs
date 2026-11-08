@@ -55,6 +55,12 @@ public static class MauiProgram
         builder.Services.AddTransient<AlunoListPage>();
         builder.Services.AddTransient<AlunoPage>();
 
+        // Matrículas
+        builder.Services.AddTransient<MatriculaListViewModel>();
+        builder.Services.AddTransient<MatriculaViewModel>();
+        builder.Services.AddTransient<MatriculaListPage>();
+        builder.Services.AddTransient<MatriculaPage>();
+
         // Configurações
         builder.Services.AddTransient<ConfigPage>();
 

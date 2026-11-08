@@ -29,5 +29,10 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(
             "aluno",
             typeof(AlunoPage));
+
+        // Rota de cadastro e edição de Matrículas
+        Routing.RegisterRoute(
+            "matricula",
+            typeof(MatriculaPage));
     }
 }
