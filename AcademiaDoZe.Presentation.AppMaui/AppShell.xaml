@@ -77,6 +77,34 @@
             Route="matriculas" />
     </FlyoutItem>
 
+    <!-- Controle de Acesso dos Alunos -->
+    <FlyoutItem Title="Acesso de Alunos">
+        <FlyoutItem.Icon>
+            <FontImageSource
+                FontFamily="MaterialIcons"
+                Glyph="&#xE8AC;"
+                Size="24" />
+        </FlyoutItem.Icon>
+
+        <ShellContent
+            ContentTemplate="{DataTemplate views:AcessoAlunoPage}"
+            Route="acessoalunos" />
+    </FlyoutItem>
+
+    <!-- Controle de Acesso dos Colaboradores -->
+    <FlyoutItem Title="Acesso de Colaboradores">
+        <FlyoutItem.Icon>
+            <FontImageSource
+                FontFamily="MaterialIcons"
+                Glyph="&#xE8AC;"
+                Size="24" />
+        </FlyoutItem.Icon>
+
+        <ShellContent
+            ContentTemplate="{DataTemplate views:AcessoColaboradorPage}"
+            Route="acessocolaboradores" />
+    </FlyoutItem>
+
     <!-- Configurações -->
     <FlyoutItem Title="Configurações">
         <FlyoutItem.Icon>

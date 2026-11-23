@@ -31,6 +31,7 @@ public static class MauiProgram
                     "MaterialIcons");
             });
 
+        // Configuração do banco e dos serviços
         ConfigurationHelper.ConfigureServices(builder.Services);
 
         // Dashboard
@@ -60,6 +61,16 @@ public static class MauiProgram
         builder.Services.AddTransient<MatriculaViewModel>();
         builder.Services.AddTransient<MatriculaListPage>();
         builder.Services.AddTransient<MatriculaPage>();
+
+        // ============================================
+        // AVALIAÇÃO 03 - CONTROLE DE ACESSO
+        // ============================================
+
+        // Controle de acesso dos alunos
+        builder.Services.AddTransient<AcessoAlunoPage>();
+
+        // Controle de acesso dos colaboradores
+        builder.Services.AddTransient<AcessoColaboradorPage>();
 
         // Configurações
         builder.Services.AddTransient<ConfigPage>();

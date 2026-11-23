@@ -69,6 +69,14 @@
 
 	<ItemGroup>
 
+		<MauiXaml Update="Views\AcessoAlunoPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+
+		<MauiXaml Update="Views\AcessoColaboradorPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+
 		<MauiXaml Update="Views\AlunoListPage.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>

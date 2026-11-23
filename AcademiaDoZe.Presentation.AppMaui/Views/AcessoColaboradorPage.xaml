@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="AcademiaDoZe.Presentation.AppMaui.Views.AcessoColaboradorPage"
+    Title="Acesso de Colaboradores"
+    BackgroundColor="#121212">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="24"
+            Spacing="20">
+
+            <!-- TITULO -->
+            <Label
+                Text="Controle de Acesso"
+                FontSize="28"
+                FontAttributes="Bold"
+                TextColor="White"
+                HorizontalOptions="Center" />
+
+            <Label
+                Text="Entrada e saída de colaboradores"
+                FontSize="15"
+                TextColor="#BDBDBD"
+                HorizontalOptions="Center" />
+
+            <!-- BUSCA -->
+            <Border
+                BackgroundColor="#242424"
+                Stroke="#444444"
+                StrokeShape="RoundRectangle 14"
+                Padding="16">
+
+                <VerticalStackLayout Spacing="12">
+
+                    <Label
+                        Text="Localizar Colaborador"
+                        FontSize="19"
+                        FontAttributes="Bold"
+                        TextColor="White" />
+
+                    <Entry
+                        x:Name="CpfEntry"
+                        Placeholder="Digite o CPF do colaborador"
+                        Keyboard="Numeric"
+                        TextColor="White"
+                        PlaceholderColor="#AAAAAA" />
+
+                    <Button
+                        x:Name="BuscarButton"
+                        Text="Buscar Colaborador"
+                        BackgroundColor="#9B7DE5"
+                        TextColor="White"
+                        Clicked="OnBuscarClicked" />
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- IDENTIFICACAO -->
+            <Border
+                BackgroundColor="#242424"
+                Stroke="#444444"
+                StrokeShape="RoundRectangle 14"
+                Padding="16">
+
+                <VerticalStackLayout Spacing="12">
+
+                    <Label
+                        Text="Identificação do Colaborador"
+                        FontSize="19"
+                        FontAttributes="Bold"
+                        TextColor="White" />
+
+                    <Label
+                        x:Name="NomeColaboradorLabel"
+                        Text="Nenhum colaborador selecionado"
+                        FontSize="17"
+                        TextColor="White" />
+
+                    <Label
+                        x:Name="VinculoLabel"
+                        Text="Vínculo: não informado"
+                        FontSize="15"
+                        TextColor="#D1D1D1" />
+
+                    <Label
+                        x:Name="SituacaoLabel"
+                        Text="Busque um colaborador para continuar."
+                        FontSize="14"
+                        TextColor="#BDBDBD" />
+
+                    <Button
+                        x:Name="EntradaButton"
+                        Text="Registrar Entrada"
+                        BackgroundColor="#9B7DE5"
+                        TextColor="White"
+                        IsEnabled="False"
+                        Clicked="OnEntradaClicked" />
+
+                    <Button
+                        x:Name="SaidaButton"
+                        Text="Registrar Saída"
+                        BackgroundColor="#555555"
+                        TextColor="White"
+                        IsEnabled="False"
+                        Clicked="OnSaidaClicked" />
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- RESULTADO -->
+            <Border
+                BackgroundColor="#242424"
+                Stroke="#444444"
+                StrokeShape="RoundRectangle 14"
+                Padding="16">
+
+                <VerticalStackLayout Spacing="10">
+
+                    <Label
+                        Text="Resultado da Operação"
+                        FontSize="19"
+                        FontAttributes="Bold"
+                        TextColor="White" />
+
+                    <Label
+                        x:Name="ResultadoLabel"
+                        Text="Aguardando operação..."
+                        FontSize="15"
+                        TextColor="#D1D1D1"
+                        LineBreakMode="WordWrap" />
+
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

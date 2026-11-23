@@ -1,4 +1,5 @@
-﻿// Amanda Soares Poroski
+﻿
+// Amanda Soares Poroski
 
 using AcademiaDoZe.Application.Interfaces;
 using AcademiaDoZe.Application.Services;
@@ -13,13 +14,36 @@ public static class ApplicationDependencyInjection
     public static IServiceCollection AddApplicationServices(
         this IServiceCollection services)
     {
-        // Registra os serviços da camada de aplicação
-        services.AddTransient<ILogradouroService, LogradouroService>();
-        services.AddTransient<IColaboradorService, ColaboradorService>();
-        services.AddTransient<IAlunoService, AlunoService>();
-        services.AddTransient<IMatriculaService, MatriculaService>();
+        // ============================================
+        // SERVICOS DA APLICACAO
+        // ============================================
 
-        // Registra as fábricas dos repositórios
+        services.AddTransient<
+            ILogradouroService,
+            LogradouroService>();
+
+        services.AddTransient<
+            IColaboradorService,
+            ColaboradorService>();
+
+        services.AddTransient<
+            IAlunoService,
+            AlunoService>();
+
+        services.AddTransient<
+            IMatriculaService,
+            MatriculaService>();
+
+        // Avaliacao 03 - Acesso dos alunos
+        services.AddTransient<AcessoAlunoService>();
+
+        // Avaliacao 03 - Acesso dos colaboradores
+        services.AddTransient<AcessoColaboradorService>();
+
+        // ============================================
+        // REPOSITORIO DE LOGRADOUROS
+        // ============================================
+
         services.AddTransient(provider =>
         {
             var config =
@@ -30,6 +54,10 @@ public static class ApplicationDependencyInjection
                     config.ConnectionString,
                     config.DatabaseType));
         });
+
+        // ============================================
+        // REPOSITORIO DE COLABORADORES
+        // ============================================
 
         services.AddTransient(provider =>
         {
@@ -42,6 +70,10 @@ public static class ApplicationDependencyInjection
                     config.DatabaseType));
         });
 
+        // ============================================
+        // REPOSITORIO DE ALUNOS
+        // ============================================
+
         services.AddTransient(provider =>
         {
             var config =
@@ -53,6 +85,10 @@ public static class ApplicationDependencyInjection
                     config.DatabaseType));
         });
 
+        // ============================================
+        // REPOSITORIO DE MATRICULAS
+        // ============================================
+
         services.AddTransient(provider =>
         {
             var config =
@@ -60,6 +96,36 @@ public static class ApplicationDependencyInjection
 
             return (Func<IMatriculaRepository>)(() =>
                 new MatriculaRepository(
+                    config.ConnectionString,
+                    config.DatabaseType));
+        });
+
+        // ============================================
+        // REPOSITORIO DE ACESSOS DOS ALUNOS
+        // ============================================
+
+        services.AddTransient(provider =>
+        {
+            var config =
+                provider.GetRequiredService<RepositoryConfig>();
+
+            return (Func<IAcessoAlunoRepository>)(() =>
+                new AcessoAlunoRepository(
+                    config.ConnectionString,
+                    config.DatabaseType));
+        });
+
+        // ============================================
+        // REPOSITORIO DE ACESSOS DOS COLABORADORES
+        // ============================================
+
+        services.AddTransient(provider =>
+        {
+            var config =
+                provider.GetRequiredService<RepositoryConfig>();
+
+            return (Func<IAcessoColaboradorRepository>)(() =>
+                new AcessoColaboradorRepository(
                     config.ConnectionString,
                     config.DatabaseType));
         });

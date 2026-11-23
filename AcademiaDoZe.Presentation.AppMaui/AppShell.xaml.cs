@@ -34,5 +34,10 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(
             "matricula",
             typeof(MatriculaPage));
+
+        // Avaliação 03 - Controle de Acesso dos Alunos
+        Routing.RegisterRoute(
+            "acessoaluno",
+            typeof(AcessoAlunoPage));
     }
 }

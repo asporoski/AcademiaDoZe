@@ -13,7 +13,8 @@ public static class ConfigurationHelper
 {
     public static void ConfigureServices(IServiceCollection services)
     {
-        var (connectionString, databaseType) = ObterConfiguracaoAtual();
+        var (connectionString, databaseType) =
+            ObterConfiguracaoAtual();
 
         var repositoryConfig = new RepositoryConfig
         {
@@ -59,7 +60,7 @@ public static class ConfigurationHelper
 
         if (databaseType == AppDatabaseType.Sqlite)
         {
-            // Pasta de dados do próprio aplicativo MAUI
+            // Pasta de dados do aplicativo MAUI
             var dbPath = Path.Combine(
                 FileSystem.AppDataDirectory,
                 "db_academia_do_ze.db");

@@ -1,4 +1,5 @@
-﻿// Amanda Soares Poroski
+﻿
+// Amanda Soares Poroski
 
 using AcademiaDoZe.Domain.Common;
 using AcademiaDoZe.Domain.Enums;
@@ -17,6 +18,27 @@ public class Matricula : Entity, IAggregateRoot
     public MatriculaRestricoes RestricoesMedicas { get; private set; }
     public string ObservacoesRestricoes { get; private set; }
     public Arquivo? LaudoMedico { get; private set; }
+
+    // Avaliação 03 - Validade da matrícula
+    public bool EstaAtiva =>
+        EstaAtivaEm(DateOnly.FromDateTime(DateTime.Today));
+
+    public int DiasRestantes =>
+        CalcularDiasRestantes(
+            DateOnly.FromDateTime(DateTime.Today));
+
+    public bool EstaAtivaEm(DateOnly data)
+    {
+        return data >= DataInicio && data < DataFim;
+    }
+
+    public int CalcularDiasRestantes(DateOnly data)
+    {
+        if (!EstaAtivaEm(data))
+            return 0;
+
+        return DataFim.DayNumber - data.DayNumber;
+    }
 
     private Matricula(
         int id,
